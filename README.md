@@ -1,94 +1,170 @@
 # 🤝 My-Friends Platform
 
-แพลตฟอร์ม SaaS สำหรับการช่วยเหลือซึ่งกันและกัน - เชื่อมโยงผู้ต้องการความช่วยเหลือกับผู้ช่วยเหลือ
+**A peer-to-peer assistance SaaS platform connecting people who need help with those who can provide it.**
 
 ---
 
-## 📋 คำอธิบายโปรเจกต์
+## 📋 Project Overview
 
-**My-Friends Platform** เป็นแพลตฟอร์มที่ให้ผู้ใช้สามารถโพสต์คำขอความช่วยเหลือ (เช่น ซื้อของ ส่งของ) และผู้อื่นสามารถรับงานเหล่านี้เพื่อรับค่าตอบแทน
+**My-Friends Platform** is a marketplace platform that enables users to post help requests (e.g., buying items, delivery services) and allows others to accept these tasks for compensation.
 
-### ✨ Features หลัก
+**One-sentence description:** *A peer-to-peer platform connecting requesters who need assistance with helpers willing to complete tasks for payment.*
 
-1. **2 บทบาทผู้ใช้:**
-   - 🙋‍♂️ **ผู้ขอความช่วยเหลือ (Requester)** - โพสต์งานที่ต้องการความช่วยเหลือ
-   - 🦸‍♀️ **ผู้ช่วยเหลือ (Helper)** - รับงานและรับค่าตอบแทน
+---
 
-2. **🔐 ระบบ Authentication แบบมืออาชีพ:**
-   - **OTP Login** - ล็อกอินด้วยเบอร์โทร + รหัส OTP 6 หลัก
-   - **OTP Registration** - ยืนยันเบอร์โทรด้วย OTP ก่อนสมัคร (ป้องกันขโมยเบอร์)
-   - **Session Management** - Cookie-based session (เก็บ 7 วัน)
-   - **Security** - OTP หมดอายุ 5 นาที, ซ่อน OTP จากหน้าเว็บ
+## 🎯 Problem Statement
 
-3. **💳 ระบบชำระเงิน (Payment System):**
-   - 💵 เงินสด (Cash)
+Many people need small favors or tasks completed but lack the time or ability to do them themselves. Conversely, others are willing to help for reasonable compensation. Current solutions like food delivery apps are limited to specific services and often expensive. 
+
+Students and workers in dormitories or residential areas frequently need help with errands like buying items, picking up packages, or delivering documents. However, there's no simple, localized platform to connect these needs with willing helpers in the same community. 
+
+This platform solves this gap by providing a secure, easy-to-use system where anyone can post a task, set their own price, and find local helpers quickly. It builds community trust through verified phone authentication and transparent payment tracking.
+
+---
+
+## ✨ Key Features
+
+### 1. **Dual User Roles**
+   - 🙋‍♂️ **Requester** - Posts tasks and pays for completed work
+   - 🦸‍♀️ **Helper** - Accepts and completes tasks for compensation
+
+### 2. **🔐 Professional OTP Authentication System**
+   - **OTP Login** - Secure login with phone number + 6-digit OTP
+   - **OTP Registration** - Phone verification before signup (prevents phone number theft)
+   - **Session Management** - Cookie-based sessions (7-day persistence)
+   - **Security Features**:
+     - OTP expires in 5 minutes
+     - OTP hidden from web interface (console-only)
+     - Prevents duplicate phone numbers
+     - Session timeout and encryption
+
+### 3. **💳 Integrated Payment System**
+   - 💵 Cash payment
    - 📱 PromptPay / QR Code
-   - 🏦 โอนเงินผ่านธนาคาร
+   - 🏦 Bank transfer
    - 👛 TrueMoney Wallet
-   - 💳 บัตรเครดิต/เดบิต
-   - บันทึกประวัติการชำระเงิน
+   - 💳 Credit/Debit card
+   - Complete payment history tracking
 
-4. **Core Data Entities:**
-   - **Users** - ข้อมูลผู้ใช้ (ชื่อ, เบอร์โทร, สถานที่)
-   - **Tasks** - งานช่วยเหลือ (หัวข้อ, รายละเอียด, ค่าใช้จ่าย, สถานะ, การชำระเงิน)
+### 4. **Core Data Entities**
+   - **Users** - User profiles (name, phone, location, role)
+   - **Tasks** - Help requests (title, description, costs, status, payment info)
 
-5. **Personal Data (PDPA):**
-   - ชื่อ-นามสกุล
-   - เบอร์โทรศัพท์ (ยืนยันด้วย OTP)
-   - ที่อยู่/สถานที่
-   - มีประกาศความเป็นส่วนตัวและขอความยินยอม
+### 5. **PDPA Compliance**
+   - Full name collection
+   - Phone number (OTP-verified)
+   - Location/address
+   - Privacy policy with user consent
+   - Transparent data usage disclosure
 
-6. **Workflow:**
-   - Requester สร้างคำขอ → Task status = "open"
-   - Helper เห็นและรับงาน → Task status = "in-progress"
-   - Requester ชำระเงินและยืนยัน → Task status = "completed"
-   - ระบบบันทึกวิธีการชำระเงิน
+### 6. **Complete Workflow**
+   - Requester creates task → Status: "open"
+   - Helper views and accepts task → Status: "in-progress"
+   - Requester confirms completion + payment → Status: "completed"
+   - System logs payment method and history
 
 ---
 
-## 📁 โครงสร้างโปรเจกต์
+## 👥 Core User Stories
+
+1. **As a Requester**, I want to create a help request with specific details and payment amount, so that helpers can understand what I need and decide if they want to help.
+
+2. **As a Helper**, I want to browse available tasks in my area with clear compensation details, so I can choose tasks that fit my schedule and payment expectations.
+
+3. **As a Requester**, I want to verify my phone number with OTP during registration, so the system ensures only legitimate users can post tasks.
+
+4. **As a Helper**, I want to see the requester's contact information after accepting a task, so I can coordinate delivery details directly.
+
+5. **As a Requester**, I want to select from multiple payment methods when confirming task completion, so I can pay in the most convenient way for me.
+
+6. **As a User**, I want my session to persist for several days after login, so I don't have to re-authenticate every time I use the platform.
+
+7. **As a User**, I want to view my task history with payment records, so I can track my activities and expenses.
+
+---
+
+## 🔧 Non-Functional Requirements
+
+1. **Security & Authentication**
+   - OTP-based authentication with 5-minute expiration
+   - Session management with HttpOnly cookies
+   - Phone number verification to prevent fraud
+   - Secure handling of personal data per PDPA requirements
+
+2. **Performance & Scalability**
+   - Page load time under 2 seconds on standard connections
+   - Support for at least 100 concurrent users
+   - JSON file-based storage for MVP (ready to migrate to database)
+
+3. **Usability & Accessibility**
+   - Mobile-responsive design for on-the-go access
+   - Simple, intuitive interface suitable for non-technical users
+   - Thai language support with clear instructions
+   - Single-page workflows to minimize navigation complexity
+
+---
+
+## ⚠️ Key Risks & Threats
+
+1. **Technical Risk: OTP Delivery Reliability**
+   - Currently simulated via console; production requires SMS gateway integration
+   - SMS delivery failures could block user registration/login
+   - Mitigation: Implement fallback methods and resend functionality
+
+2. **Operational Risk: Payment Verification**
+   - No real payment gateway integration in MVP
+   - Risk of payment disputes between users
+   - Mitigation: Add payment proof upload, escrow system, and dispute resolution workflow
+
+3. **Security Risk: Phone Number Verification Bypass**
+   - OTP system could be vulnerable to brute force or SIM swap attacks
+   - Mitigation: Implement rate limiting, device fingerprinting, and anomaly detection
+
+---
+
+## 📁 Project Structure
 
 ```
 My-Friends/
-├── app.js              # ไฟล์หลัก (Express server + HTML UI)
+├── app.js              # Main file (Express server + HTML UI)
 ├── package.json        # Dependencies
-├── users.json          # เก็บข้อมูลผู้ใช้ (auto-generated)
-├── tasks.json          # เก็บข้อมูลงาน (auto-generated)
-└── README.md           # เอกสารนี้
+├── users.json          # User data storage (auto-generated)
+├── tasks.json          # Task data storage (auto-generated)
+├── README.md           # This documentation
+├── QUICKSTART.md       # Quick start guide
+└── AUTHENTICATION.md   # Authentication system documentation
 ```
 
 ---
 
-## 🚀 วิธีติดตั้งและรัน
+## 🚀 Installation & Setup
 
-### ขั้นตอนที่ 1: ติดตั้ง Node.js
-ตรวจสอบว่ามี Node.js ติดตั้งแล้ว:
-```bash
-node --version
-```
-(ควรเป็น v14 ขึ้นไป)
+### Prerequisites
+- Node.js v14 or higher
+- npm (comes with Node.js)
 
-### ขั้นตอนที่ 2: สร้างโปรเจกต์
-```bash
-# ถ้ายังไม่มี package.json ให้สร้าง
-npm init -y
-```
+### Quick Start
 
-### ขั้นตอนที่ 3: ติดตั้ง Express
 ```bash
-npm install express
-```
+# 1. Clone the repository
+git clone https://github.com/Tivamacherie/My-Friends.git
+cd My-Friends
 
-### ขั้นตอนที่ 4: รันแอปพลิเคชัน
-```bash
+# 2. Install dependencies
+npm install
+
+# 3. Run the application
 node app.js
+# or
+npm start
+
+# 4. Open browser
+# Navigate to: http://localhost:3000
 ```
 
-### ขั้นตอนที่ 5: เปิดเว็บบราวเซอร์
-เปิดเว็บบราวเซอร์และไปที่:
-```
-http://localhost:3000
-```
+### Testing the System
+
+**Note:** OTP codes will appear in the terminal/console (simulated SMS)
 
 ---
 
